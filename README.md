@@ -24,8 +24,9 @@ We propose a new problem, In-2-4D, for generative 4D (i.e., 3D + motion) inbetwe
 
 <div align="center">
 <table>
+    <br>
 <tr>
-    <td><img src="https://github.com/alimohammadiamirhossein/smite/blob/main/assets/teaser.png" width="100%"/></td>
+    <td><img src="https://github.com/sauradip/In-2-4D/blob/main/assets/teaser_fig_fin_v2.png" width="100%"/></td>
 </tr>
 </table>
 </div>
