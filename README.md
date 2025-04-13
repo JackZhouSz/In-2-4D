@@ -30,3 +30,11 @@ We propose a new problem, In-2-4D, for generative 4D (i.e., 3D + motion) inbetwe
 </tr>
 </table>
 </div>
+
+## Why In-2-4D?
+
+- In-2-4D minimizes the requirement of any camera information and can convert casually captured images describing a motion into 4D.
+- Due to "divid-and-conquer" strategy of breaking complex motions into simple ones, In-2-4D can handle motion complexity of considerable degree.
+- Usage of rigid-constraints in smaller fragments ensures the 3D generation is smooth and textures are accurate in global scene.
+
+## Code will be released soon ! Stay Tuned 
