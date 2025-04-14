@@ -16,7 +16,7 @@
 
 
 <h3 align="center">
-  <a href="" target='_blank'>Paper</a> |
+  <a href="https://arxiv.org/abs/2504.08366" target='_blank'>Paper</a> |
   <a href="https://in-2-4d.github.io" target='_blank'>Project Page</a> 
 </h3>
 </div>
