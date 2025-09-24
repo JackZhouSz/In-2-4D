@@ -14,6 +14,9 @@
         &emsp; <br>
 </div>
 
+<h3 align="center">
+    SIGGRAPH ASIA 2025
+</h3>
 
 <h3 align="center">
   <a href="https://arxiv.org/abs/2504.08366" target='_blank'>Paper</a> |
