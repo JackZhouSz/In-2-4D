@@ -1,0 +1,12 @@
+[submodule "third_party/Wan2.2"]
+	path = third_party/Wan2.2
+	url = https://github.com/Wan-Video/Wan2.2.git
+[submodule "third_party/Era3D"]
+	path = third_party/Era3D
+	url = https://github.com/pengHTYX/Era3D.git
+[submodule "third_party/EG4D"]
+	path = third_party/EG4D
+	url = https://github.com/jasongzy/EG4D.git
+[submodule "third_party/LTX-Video"]
+	path = third_party/LTX-Video
+	url = https://github.com/Lightricks/LTX-Video.git

@@ -1,0 +1,4 @@
+outputs/
+checkpoints/
+__pycache__/
+*.pyc

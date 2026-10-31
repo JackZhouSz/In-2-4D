@@ -1,0 +1,10 @@
+_base_: t4x4_distilled.yaml
+
+video:
+  backbone: ltx
+hier:
+  mode: pinned
+  pin_grid: 8
+ltx:
+  device: 0
+  t5_device: cpu

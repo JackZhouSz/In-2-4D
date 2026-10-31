@@ -1,0 +1,214 @@
+seed: 0
+aux_device: null
+
+paths:
+  outputs: outputs
+  wan_ckpt: checkpoints/Wan2.2-I2V-A14B
+  era3d_ckpt: pengHTYX/MacLab-Era3D-512-6view-ortho
+
+checks:
+  strict: true
+
+framing:
+  size: 624
+  margin: 0.15
+matting:
+  image: rembg
+  video: sam2
+  rembg_model: u2net
+  white_threshold: 0.06
+  sam2_cfg: configs/sam2.1/sam2.1_hiera_l.yaml
+  sam2_ckpt: checkpoints/sam2.1_hiera_large.pt
+
+caption:
+  model: Qwen/Qwen2.5-VL-7B-Instruct
+  max_new_tokens: 120
+  prompt: null
+  extra_negative: "camera motion, zoom, background change"
+  dtype: bfloat16
+  device_map: cuda
+
+video:
+  backbone: wan
+  frame_num: 81
+  fps: 16
+  seed: 0
+  flf_lpips_end: 0.15
+  flf_lpips_start: 0.10
+
+ltx:
+  ckpt_dir: checkpoints/LTX-Video
+  pipeline_config: ltxv-2b-0.9.8-distilled.yaml
+  dtype: bfloat16
+  device: 0
+  t5_device: cpu
+  image_cond_noise_scale: 0.15
+  keyframe_strength: 1.0
+  offload: true
+
+wan:
+  backend: wan22_patched
+  wan21_flf2v_id: Wan-AI/Wan2.1-FLF2V-14B-720P-diffusers
+  steps: 40
+  solver: unipc
+  shift: 5.0
+  guide: [3.5, 3.5]
+  max_area: 389376
+  offload_model: true
+  t5_cpu: true
+  convert_model_dtype: true
+  dtype: bfloat16
+  attention: flash
+  devices: [0]
+  lora_dir: null
+  lora_strength: 1.0
+  block_split: null
+
+features:
+  sd_id: sd2-community/stable-diffusion-2-1
+  t: 261
+  up_ft_index: 1
+  ensemble: 8
+  res: 768
+  seed: 0
+  dtype: float32
+  chunk: null
+  offload: false
+progress:
+  pair_window: 30
+  sigma: 10.0
+  lam: 1.0e-3
+  p: 2.0
+  w_local: 1.0
+  siglip_model: ViT-SO400M-14-SigLIP
+  siglip_pretrained: webli
+seg:
+  c_pen: 0.05
+
+hier:
+  mode: fragments
+  pin_grid: 1
+  T_total: 81
+  T_min: 17
+  T_max: 81
+  max_depth: 2
+  lin_target: 0.9
+  rematte_keyframes: true
+keyframe_mode: progress_segments
+tau_feat: 0.80
+refine_radius: 2
+keyframe_fidelity_sign: best
+retime:
+  enabled: false
+  apply_to: root
+  iters: 3
+  alpha_low: 0.8
+  alpha_high: 0.2
+  kappa: 3.0
+
+era3d:
+  config: configs/test_unclip-512-6view-ortho.yaml
+  steps: 40
+  cfg: 3.0
+  eta: 1.0
+  crop_size: 420
+  img_size: 512
+  seed: 42
+  alpha_threshold: 0.06
+  alpha_erode_px: 1
+injection:
+  mode: ema
+  s: 0.5
+  inject_steps_frac: 1.0
+
+gs:
+  D_far: 200.0
+  orbit_radius: 1.3
+  aabb: 1.0
+  init: visual_hull
+  init_points: 20000
+  hull_samples: 2000000
+  init_radius: 0.8
+  static_iters: 6000
+  dynamic_iters: 12000
+  densify_until_frac: 0.6
+  sh_degree: 3
+  random_bg_prob: 0.0
+  opacity_reset: true
+  late_prune_interval: 0
+  frames_per_step: 4
+  hparams:
+    net_width: 64
+    defor_depth: 1
+    time_smoothness_weight: 0.1
+    plane_tv_weight: 0.05
+    l1_time_planes: 0.05
+    densify_grad_threshold_coarse: 0.0001
+    densify_grad_threshold_fine_init: 0.0001
+    densify_grad_threshold_after: 0.0001
+    weight_decay_iteration: 0
+    predict_color_deform: true
+    coarse_iterations: 6000
+    deformation_lr_final: 1.6e-06
+    grid_lr_final: 1.6e-05
+    iterations: 30000
+    pruning_interval: 8000
+    dataloader: true
+    convert_SHs_python: true
+  low_res_aug: true
+  camera_test_iou_front: 0.9
+  camera_test_iou_right: 0.7
+loss:
+  ref: 0.4
+  mask: 0.3
+  rigid: 0.3
+  mv: 0.2
+  mv_lpips: 0.2
+  mask_type: l1
+use_mv_rgb_loss: true
+rigid:
+  knn: 16
+  anchors: 4096
+
+merge:
+  lambda: 0.5
+  iters: 1000
+  lr_mult: 0.1
+  overlap_frames: 1
+  boundary_crossfade_frames: 0
+  anchor_weight: 0.0
+  continuity_lpips: 0.05
+
+track:
+  window: 12
+  knn: 32
+  radius_px: 8
+  weight: 0.1
+  iters: 3000
+  lr_mult: 0.3
+  grid_size: 40
+  track_mv_views: false
+  mv_weight: 0.5
+post_ema_smoothing:
+  enabled: false
+  alpha: 0.6
+  mode: tracked
+  window: 16
+  stride: 8
+  grid_size: 40
+  min_visible: 0.8
+  views: front
+  knn: 16
+  max_dist: 0.05
+  depth_model: depth-anything/Depth-Anything-V2-Large-hf
+
+eval:
+  num_frames: 64
+  views_azimuth: [0, 72, 144, 216, 288]
+  elevation: 0.0
+  radius: 2.5
+  fov_deg: 49.1
+  img_size: 512
+  pc_opacity: 0.1
+  gt_dir: null
+  injection_ablation: false
