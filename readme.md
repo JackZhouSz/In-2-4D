@@ -32,9 +32,7 @@ We propose a new problem, In-2-4D, for generative 4D (i.e., 3D + motion) inbetwe
 ---
 
 ### News
-- 2026.Oct.31: Novel-view video renderer (`./run.sh video`), selectable video backbone (Wan2.2 or LTX-Video),
-  single-clip keyframe pinning for multi-condition video models.
-- 2026.Oct.30: First end-to-end run on 4× Tesla T4 with the 4-step distilled video model (`configs/t4x4_distilled.yaml`).
+- 2026.Oct.30: Open-sourced In-2-4D model with updated backbones and configurations.
 
 ### Install
 The third-party code lives in git submodules under `third_party/`, pinned to the tested commits. It is never edited;
