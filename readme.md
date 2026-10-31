@@ -71,9 +71,9 @@ IN24D_CFG=configs/t4x4_distilled.yaml ./run.sh flower data_test/flower/start.png
 
 Results for each case go to `outputs/<case>/`:
 ```
-video/              inputs, motion caption, generated in-between video, motion progress, clips   (s0-s4)
-multiview/          multi-view images of every clip frame                                         (s5)
-4d/                 4D Gaussians (reconstruction/ merge/ refinement/), rendered views and metrics (s6-s9)
+video/              inputs, motion caption, generated in-between video, motion progress, clips  
+multiview/          multi-view images of every clip frame                                        
+4d/                 4D Gaussians (reconstruction/ merge/ refinement/), rendered views and metrics
 novel_view_videos/  grid.mp4 and orbit.mp4 from ./run.sh video
 ```
 
