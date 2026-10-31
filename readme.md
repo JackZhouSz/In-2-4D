@@ -39,7 +39,7 @@ The third-party code lives in git submodules under `third_party/`, pinned to the
 changes are applied at import time from `patches/`. The stages need conflicting pins, so there are three conda envs:
 ```bash
 git clone https://github.com/sauradip/in24d.git && cd in24d
-./run.sh setup              # fetches the submodules, then envs in24d_wan (steps 0-4, 9) / in24d_era3d (step 5) / in24d_4dgs (steps 6-9)
+./run.sh setup          
 ```
 
 ### Pretrained weights
@@ -47,7 +47,7 @@ Download all models with one script (files already present are skipped):
 ```bash
 bash download_weights.sh                 # add --distilled for the 4-step Wan model, --ltx for the LTX-Video backbone
 ```
-Large checkpoints (Wan2.2-I2V-A14B, SAM 2.1, Wan2.2-Lightning, LTX-Video) go to `checkpoints/`; Qwen2.5-VL-7B,
+Large checkpoints (Wan2.2-I2V-A14B, SAM 2.1, Wan2.2-Lightning, LTX-Video, DynamicCrafter) go to `checkpoints/`; Qwen2.5-VL-7B,
 Stable Diffusion 2.1, Era3D, Depth-Anything-V2, CoTracker3 and the matting models go to the standard Hugging Face /
 torch hub caches.
 
@@ -69,9 +69,6 @@ IN24D_CFG=configs/t4x4_distilled.yaml ./run.sh flower data_test/flower/start.png
 ./run.sh video flower --with_input --elevations 0 30
 ```
 
-Finished steps are skipped, so an interrupted run continues with `./run.sh resume flower`. Useful options:
-`--stages s6-s9` runs a subset, `--force` recomputes it, `--prompt "..."` overrides the motion caption,
-`--set key=value ...` overrides any config value (one `--set` followed by all assignments).
 Results for each case go to `outputs/<case>/`:
 ```
 video/              inputs, motion caption, generated in-between video, motion progress, clips   (s0-s4)
@@ -80,19 +77,6 @@ multiview/          multi-view images of every clip frame                       
 novel_view_videos/  grid.mp4 and orbit.mp4 from ./run.sh video
 ```
 
-### Video backbone
-The in-between video model is selected with `video.backbone`:
-
-| backbone | conditioning | fragmentation (`hier.mode`) | config |
-|---|---|---|---|
-| `wan` (default) | first + last frame | `fragments`: non-linear motion is split at keyframes, each segment is regenerated as its own clip and the 4D fragments are merged | `configs/t4x4_distilled.yaml` |
-| `ltx` | prompt + any number of frames pinned to frame indices | `pinned`: keyframes are pinned at their linear-progress frames in one clip, so there is always a single fragment | `configs/t4x4_ltx.yaml` |
-
-```sh
-IN24D_CFG=configs/t4x4_ltx.yaml ./run.sh flower data_test/flower/start.png data_test/flower/end.png
-```
-Clip length, fps, seed and the first/last-frame fidelity thresholds are shared by both backbones (`video:` in
-`configs/default.yaml`); backbone-specific settings are under `wan:` and `ltx:`.
 
 ### Third-party code
 Used as unmodified git submodules, each under its own license:
@@ -103,10 +87,11 @@ Used as unmodified git submodules, each under its own license:
 
 ### Citation
 ```bib
-@article{nag2025in24d,
-    title={In-2-4D: Inbetweening from Two Single-View Images to 4D Generation},
-    author={Sauradip Nag and Daniel Cohen-Or and Hao Zhang and Ali Mahdavi-Amiri},
-    journal={arXiv preprint arXiv:2504.08366},
-    year={2025}
+@inproceedings{nag20252,
+  title={In-2-4d: Inbetweening from two single-view images to 4d generation},
+  author={Nag, Sauradip and Cohen-Or, Daniel and Zhang, Hao and Amiri, Ali Mahdavi},
+  booktitle={Proceedings of the SIGGRAPH Asia 2025 Conference Papers},
+  pages={1--12},
+  year={2025}
 }
 ```
