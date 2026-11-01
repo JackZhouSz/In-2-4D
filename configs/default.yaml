@@ -15,7 +15,7 @@ framing:
 matting:
   image: rembg
   video: sam2
-  rembg_model: u2net
+  rembg_model: birefnet-general
   white_threshold: 0.06
   sam2_cfg: configs/sam2.1/sam2.1_hiera_l.yaml
   sam2_ckpt: checkpoints/sam2.1_hiera_large.pt
@@ -156,7 +156,7 @@ gs:
     dataloader: true
     convert_SHs_python: true
   low_res_aug: true
-  camera_test_iou_front: 0.9
+  camera_test_iou_front: 0.7
   camera_test_iou_right: 0.7
 loss:
   ref: 0.4

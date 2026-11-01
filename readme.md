@@ -38,7 +38,7 @@ We propose a new problem, In-2-4D, for generative 4D (i.e., 3D + motion) inbetwe
 The third-party code lives in git submodules under `third_party/`, pinned to the tested commits. It is never edited;
 changes are applied at import time from `patches/`. The stages need conflicting pins, so there are three conda envs:
 ```bash
-git clone https://github.com/sauradip/in24d.git && cd in24d
+git clone https://github.com/sauradip/In-2-4D.git && cd In-2-4D
 ./run.sh setup          
 ```
 

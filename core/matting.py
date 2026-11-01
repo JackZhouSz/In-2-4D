@@ -24,7 +24,7 @@ def matte_white_threshold(rgb: np.ndarray, thresh: float, erode_px: int = 0) -> 
     return fg.astype(np.float32)
 
 
-def matte_rembg(rgb: np.ndarray, model: str = "u2net") -> np.ndarray:
+def matte_rembg(rgb: np.ndarray, model: str = "birefnet-general") -> np.ndarray:
     """model: any rembg session name, e.g. u2net, isnet-general-use, birefnet-general (keeps thin structures)."""
     global _REMBG_SESSION
     from rembg import new_session, remove
